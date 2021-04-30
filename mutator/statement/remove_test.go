@@ -3,7 +3,7 @@ package statement
 import (
 	"testing"
 
-	"github.com/zimmski/go-mutesting/test"
+	"hsc.philips.com.cn/go-mutation-test/test"
 )
 
 func TestMutatorRemoveStatement(t *testing.T) {

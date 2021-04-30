@@ -5,8 +5,8 @@ import (
 	"go/token"
 	"go/types"
 
-	"github.com/zimmski/go-mutesting/astutil"
-	"github.com/zimmski/go-mutesting/mutator"
+	"hsc.philips.com.cn/go-mutation-test/mutator"
+	"hsc.philips.com.cn/go-mutation-test/util"
 )
 
 func init() {
@@ -46,7 +46,7 @@ func MutatorRemoveStatement(pkg *types.Package, info *types.Info, node ast.Node)
 
 			mutations = append(mutations, mutator.Mutation{
 				Change: func() {
-					l[li] = astutil.CreateNoopOfStatement(pkg, info, old)
+					l[li] = util.CreateNoopOfStatement(pkg, info, old)
 				},
 				Reset: func() {
 					l[li] = old

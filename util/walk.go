@@ -1,4 +1,4 @@
-package mutesting
+package util
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"go/types"
 	"strings"
 
-	"github.com/zimmski/go-mutesting/mutator"
+	"hsc.philips.com.cn/go-mutation-test/mutator"
 )
 
 // CountWalk returns the number of corresponding mutations for a given mutator.

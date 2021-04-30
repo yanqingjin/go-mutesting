@@ -22,12 +22,11 @@ import (
 	"github.com/zimmski/go-tool/importing"
 	"github.com/zimmski/osutil"
 
-	"github.com/zimmski/go-mutesting"
-	"github.com/zimmski/go-mutesting/astutil"
-	"github.com/zimmski/go-mutesting/mutator"
-	_ "github.com/zimmski/go-mutesting/mutator/branch"
-	_ "github.com/zimmski/go-mutesting/mutator/expression"
-	_ "github.com/zimmski/go-mutesting/mutator/statement"
+	"hsc.philips.com.cn/go-mutation-test/mutator"
+	_ "hsc.philips.com.cn/go-mutation-test/mutator/branch"
+	_ "hsc.philips.com.cn/go-mutation-test/mutator/expression"
+	_ "hsc.philips.com.cn/go-mutation-test/mutator/statement"
+	"hsc.philips.com.cn/go-mutation-test/util"
 )
 
 const (
@@ -181,12 +180,12 @@ func mainCmd(args []string) int {
 		for _, file := range files {
 			fmt.Println(file)
 
-			src, _, err := mutesting.ParseFile(file)
+			src, _, err := util.ParseFile(file)
 			if err != nil {
 				return exitError("Could not open file %q: %v", file, err)
 			}
 
-			mutesting.PrintWalk(src)
+			util.PrintWalk(src)
 
 			fmt.Println()
 		}
@@ -254,7 +253,7 @@ MUTATOR:
 	for _, file := range files {
 		verbose(opts, "Mutate %q", file)
 
-		src, fset, pkg, info, err := mutesting.ParseAndTypeCheckFile(file)
+		src, fset, pkg, info, err := util.ParseAndTypeCheckFile(file)
 		if err != nil {
 			return exitError(err.Error())
 		}
@@ -281,7 +280,7 @@ MUTATOR:
 				return exitError("Match regex is not valid: %v", err)
 			}
 
-			for _, f := range astutil.Functions(src) {
+			for _, f := range util.Functions(src) {
 				if m.MatchString(f.Name.Name) {
 					mutationID = mutate(opts, mutators, mutationBlackList, mutationID, pkg, info, file, fset, src, f, tmpFile, execs, stats)
 				}
@@ -312,7 +311,7 @@ func mutate(opts *options, mutators []mutatorItem, mutationBlackList map[string]
 	for _, m := range mutators {
 		debug(opts, "Mutator %s", m.Name)
 
-		changed := mutesting.MutateWalk(pkg, info, node, m.Mutator)
+		changed := util.MutateWalk(pkg, info, node, m.Mutator)
 
 		for {
 			_, ok := <-changed

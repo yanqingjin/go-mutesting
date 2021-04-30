@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"fmt"
 	"go/printer"
+	"hsc.philips.com.cn/go-mutation-test/util"
 	"io/ioutil"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/zimmski/go-mutesting"
-	"github.com/zimmski/go-mutesting/mutator"
+	"hsc.philips.com.cn/go-mutation-test/mutator"
 )
 
 // Mutator tests a mutator.
@@ -24,18 +24,18 @@ func Mutator(t *testing.T, m mutator.Mutator, testFile string, count int) {
 	assert.Nil(t, err)
 
 	// Parse and type-check the original source code
-	src, fset, pkg, info, err := mutesting.ParseAndTypeCheckFile(testFile)
+	src, fset, pkg, info, err := util.ParseAndTypeCheckFile(testFile)
 	assert.Nil(t, err)
 
 	// Mutate a non relevant node
 	assert.Nil(t, m(pkg, info, src))
 
 	// Count the actual mutations
-	n := mutesting.CountWalk(pkg, info, src, m)
+	n := util.CountWalk(pkg, info, src, m)
 	assert.Equal(t, count, n)
 
 	// Mutate all relevant nodes -> test whole mutation process
-	changed := mutesting.MutateWalk(pkg, info, src, m)
+	changed := util.MutateWalk(pkg, info, src, m)
 
 	for i := 0; i < count; i++ {
 		assert.True(t, <-changed)

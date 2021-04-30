@@ -4,8 +4,8 @@ import (
 	"go/ast"
 	"go/types"
 
-	"github.com/zimmski/go-mutesting/astutil"
-	"github.com/zimmski/go-mutesting/mutator"
+	"hsc.philips.com.cn/go-mutation-test/util"
+	"hsc.philips.com.cn/go-mutation-test/mutator"
 )
 
 func init() {
@@ -25,7 +25,7 @@ func MutatorCase(pkg *types.Package, info *types.Info, node ast.Node) []mutator.
 		{
 			Change: func() {
 				n.Body = []ast.Stmt{
-					astutil.CreateNoopOfStatements(pkg, info, n.Body),
+					util.CreateNoopOfStatements(pkg, info, n.Body),
 				}
 			},
 			Reset: func() {

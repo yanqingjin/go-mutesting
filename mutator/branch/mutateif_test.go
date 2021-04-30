@@ -3,7 +3,7 @@ package branch
 import (
 	"testing"
 
-	"github.com/zimmski/go-mutesting/test"
+	"hsc.philips.com.cn/go-mutation-test/test"
 )
 
 func TestMutatorIf(t *testing.T) {

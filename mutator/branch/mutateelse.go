@@ -4,8 +4,8 @@ import (
 	"go/ast"
 	"go/types"
 
-	"github.com/zimmski/go-mutesting/astutil"
-	"github.com/zimmski/go-mutesting/mutator"
+	"hsc.philips.com.cn/go-mutation-test/util"
+	"hsc.philips.com.cn/go-mutation-test/mutator"
 )
 
 func init() {
@@ -29,7 +29,7 @@ func MutatorElse(pkg *types.Package, info *types.Info, node ast.Node) []mutator.
 	return []mutator.Mutation{
 		{
 			Change: func() {
-				n.Else = astutil.CreateNoopOfStatement(pkg, info, old)
+				n.Else = util.CreateNoopOfStatement(pkg, info, old)
 			},
 			Reset: func() {
 				n.Else = old
